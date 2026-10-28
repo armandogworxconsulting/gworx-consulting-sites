@@ -35,25 +35,4 @@
     wide.addEventListener ? wide.addEventListener("change", syncWidth) : wide.addListener(syncWidth);
   }
 
-  /* ---- Hero video facade --------------------------------------------
-     The play control is rendered hidden and only revealed when a video
-     source has been configured on the figure, so there is never a
-     control on the page that does nothing. */
-  var media = document.querySelector(".media[data-video-src]");
-  var play = media && media.querySelector(".media__play");
-  var src = media && media.getAttribute("data-video-src");
-
-  if (media && play && src) {
-    play.hidden = false;
-    play.addEventListener("click", function () {
-      var video = document.createElement("video");
-      video.src = src;
-      video.controls = true;
-      video.autoplay = true;
-      video.setAttribute("playsinline", "");
-      video.setAttribute("poster", media.querySelector(".media__poster").src);
-      media.replaceChildren(video);
-      video.focus();
-    });
-  }
 })();

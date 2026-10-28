@@ -19,6 +19,7 @@
   --bg: #ffffff;
   --bg-muted: #f5f5f5;
   --bg-dark: var(--navy-900);
+  --surface-header: #303f50;   /* the nav bar's own slate, lighter than the hero */
   --bg-dark-alt: var(--navy-800);
   --surface-quote: #fff7e8;
 
@@ -160,8 +161,7 @@ a { color: inherit; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--bg-dark);
-  border-bottom: 1px solid var(--navy-800);
+  background: var(--surface-header);
 }
 
 .site-header__inner {
@@ -177,28 +177,35 @@ a { color: inherit; }
 
 .brand {
   display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
   text-decoration: none;
-  letter-spacing: 1px;
 }
+.brand__logo {
+  height: 30px;
+  width: auto;
+}
+.brand__suffix {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-on-dark);
+}
+
+/* The footer keeps the plain wordmark set in type. */
 .brand__name {
   font-size: 20px;
   font-weight: 900;
   line-height: 24px;
   color: var(--text-on-dark);
 }
-.brand__suffix {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--accent);
-}
 .brand__name--footer { font-size: 18px; }
 
 @media (max-width: 400px) {
-  .brand { gap: 6px; }
-  .brand__name { font-size: 17px; }
-  .brand__suffix { font-size: 10px; }
+  .brand { gap: 7px; }
+  .brand__logo { height: 24px; }
+  .brand__suffix { font-size: 12px; letter-spacing: 1.5px; }
   .nav-toggle { padding: 10px; }
   /* Keep the label as the button's accessible name when it is hidden. */
   .nav-toggle__label {
@@ -217,9 +224,9 @@ a { color: inherit; }
   min-height: 44px;
   padding: 10px 12px;
   background: transparent;
-  border: 1px solid var(--navy-400);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: var(--radius-sm);
-  color: var(--navy-200);
+  color: var(--text-on-dark);
   font: 600 14px/1 var(--font);
   cursor: pointer;
 }
@@ -258,12 +265,12 @@ a { color: inherit; }
 .primary-nav__list a {
   display: inline-block;
   padding: 10px 0;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
-  color: var(--navy-200);
+  color: var(--text-on-dark);
   text-decoration: none;
 }
-.primary-nav__list a:hover { color: var(--text-on-dark); }
+.primary-nav__list a:hover { color: var(--accent); }
 
 @media (max-width: 899px) {
   .js .primary-nav {
@@ -275,14 +282,13 @@ a { color: inherit; }
     align-items: stretch;
     gap: 8px;
     padding: 8px var(--gutter) 20px;
-    background: var(--bg-dark);
-    border-bottom: 1px solid var(--navy-800);
+    background: var(--surface-header);
   }
   .js .primary-nav.is-open { display: flex; }
   .js .primary-nav__list { flex-direction: column; align-items: stretch; gap: 0; }
   .js .primary-nav__list a {
     padding: 14px 0;
-    border-bottom: 1px solid var(--navy-800);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
   .js .primary-nav__cta { margin-top: 8px; }
 
@@ -361,31 +367,18 @@ a { color: inherit; }
   width: 100%;
   max-width: 900px;
   margin-top: clamp(2rem, 4vw, 2.5rem);
-  aspect-ratio: 900 / 505;
+  aspect-ratio: 16 / 9;
   border-radius: var(--radius-sm);
   overflow: hidden;
   background: var(--navy-800);
 }
-.media__poster,
-.media video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.media__play {
+.media iframe {
   position: absolute;
   inset: 0;
-  margin: auto;
-  width: 100px; height: 100px;
-  display: grid;
-  place-items: center;
-  background: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
   border: 0;
-  border-radius: 50%;
-  cursor: pointer;
 }
-.media__play:hover { background: rgba(0, 0, 0, 0.55); }
-.media__play[hidden] { display: none; }
 
 /* ---------- Pricing table ---------- */
 

@@ -10,8 +10,8 @@ terms.html            Terms of Service
 404.html              Not-found page (Pages serves it automatically; noindex)
 assets/css/styles.css Design tokens + all styling (mobile-first)
 assets/js/main.js     Progressive enhancement only (mobile menu, video facade)
-assets/img/           Responsive JPEG + WebP variants, SVG favicon
-assets/icons/         Process-step and play icons exported from Figma
+assets/img/           Logo lockup, portrait variants, OG image, SVG favicon
+assets/icons/         Process-step icons exported from Figma
 _headers              Cache and security headers for Cloudflare Pages
 robots.txt            Allows crawling, points at the sitemap
 sitemap.xml           All three URLs
@@ -91,20 +91,40 @@ Both carry a "Last updated 28 October 2026" date; bump it whenever you edit them
 
 ## Hero video
 
-The hero shows the poster frame from Figma. The play control is rendered
-`hidden` and `assets/js/main.js` only reveals it once a source is configured,
-so the page never ships a control that does nothing. To enable it:
+The hero embeds YouTube video `DfGLLdW6ksg` via `youtube-nocookie.com`.
 
-```html
-<figure class="media" data-video-src="assets/video/overview.mp4">
-```
+**`loading="lazy"` was deliberately removed from the iframe.** With it, the
+player never requested anything on a 375px viewport even though the frame was
+fully in view, leaving a blank box where the hero should be — and lazy-loading
+an above-the-fold element is against the usual guidance anyway.
+
+The cost is real: the embed pulls about **1 MB** from YouTube on every page
+view, and it is the largest thing on the page by an order of magnitude.
+Measured Lighthouse performance across three runs is 97–100 with LCP 1.3–2.1s,
+so it still clears the Core Web Vitals targets — but if that budget ever
+matters, the fix is a click-to-load facade: show the poster image, swap in the
+iframe on click. That keeps the page near-weightless until someone actually
+wants the video.
+
+Because the video is embedded, `privacy.html` now names YouTube as a third
+party. Keep those in sync if the embed is ever removed.
 
 ## Design decisions worth knowing
 
-- The Figma navigation contains a grey placeholder rectangle (`107:6`) that
-  overlaps the logo and links in the canvas render. It was treated as a
-  placeholder and omitted; the nav implements the design's intent — logo left,
-  links and CTA right.
+- The header matches the lockup in the Figma file: the G-WORX arrow wordmark,
+  "Sites", and the links Services / About / FAQs on the `#303f50` slate bar.
+  `#process` and `#contact` no longer have a nav link — that matches the
+  design, and both are still reachable by scrolling and from the footer.
+- **`assets/img/gworx-logo.png` was extracted from a raster screenshot inside
+  the Figma file**, which is the only form of the logo in there. It was alpha
+  matted off its slate background and recoloured to the design-system gold
+  `#e8a824` (the screenshot rendered it lighter). It is sized for its 99x30
+  display box and will not scale up well. **Replace it with the real logo —
+  ideally an SVG — when one is available**; it is a one-line swap in each of
+  the four pages.
+- The header reads "G-WORX Sites" while the page title, footer and structured
+  data say "G-WORX Consulting". That is how the Figma file has it, but confirm
+  it is the intended sub-brand rather than an inconsistency.
 - Accent gold `#e8a824` fails WCAG contrast as *text* on light surfaces
   (2.1:1). Gold is kept for fills, borders and icons; accent **text** on light
   backgrounds uses `--accent-ink: #8f6200` (5.4:1) and accent **borders** use

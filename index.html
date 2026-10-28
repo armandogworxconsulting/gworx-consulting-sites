@@ -37,9 +37,11 @@
 
 <header class="site-header" id="top">
   <div class="site-header__inner">
-    <a class="brand" href="#top" aria-label="G-WORX Consulting, back to top">
-      <span class="brand__name">G-WORX</span>
-      <span class="brand__suffix">CONSULTING</span>
+    <a class="brand" href="#top">
+      <img class="brand__logo" src="assets/img/gworx-logo.png"
+           srcset="assets/img/gworx-logo.png 1x, assets/img/gworx-logo@2x.png 2x"
+           width="99" height="30" alt="G-WORX">
+      <span class="brand__suffix">Sites</span>
     </a>
 
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
@@ -50,9 +52,8 @@
     <nav class="primary-nav" id="primary-nav" aria-label="Primary">
       <ul class="primary-nav__list">
         <li><a href="#services">Services</a></li>
-        <li><a href="#process">How It Works</a></li>
-        <li><a href="#about">Why G-WORX</a></li>
-        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#faqs">FAQs</a></li>
       </ul>
       <a class="btn btn--primary primary-nav__cta" href="https://calendar.app.google/PJpfv5bPjw1J3eek8" target="_blank" rel="noopener">Free Consultation<span class="visually-hidden"> (opens the booking calendar in a new tab)</span></a>
     </nav>
@@ -68,22 +69,13 @@
       <h1 class="hero__title" id="hero-title">Website and Digital Services</h1>
       <p class="hero__lede">For small and mid-size businesses who want to build their online presence.</p>
 
-      <figure class="media" data-video-src="">
-        <picture>
-          <source type="image/webp" sizes="(min-width: 996px) 900px, 100vw"
-                  srcset="assets/img/hero-video-poster-480.webp 480w, assets/img/hero-video-poster-849.webp 849w">
-          <img class="media__poster"
-               src="assets/img/hero-video-poster-849.jpg"
-               sizes="(min-width: 996px) 900px, 100vw"
-               srcset="assets/img/hero-video-poster-480.jpg 480w, assets/img/hero-video-poster-849.jpg 849w"
-               width="849" height="476" fetchpriority="high" decoding="async"
-               alt="G-WORX Consulting website and digital services overview">
-        </picture>
-        <button class="media__play" type="button" hidden>
-          <img src="assets/icons/play.svg" width="36" height="36" alt="" aria-hidden="true">
-          <span class="visually-hidden">Play the G-WORX services overview video</span>
-        </button>
-      </figure>
+      <div class="media">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/DfGLLdW6ksg?rel=0&amp;cc_load_policy=1"
+          title="G-WORX Digital Marketing Services"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
     </div>
   </section>
 

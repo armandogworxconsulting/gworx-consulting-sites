@@ -27,15 +27,17 @@
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="brand" href="index.html" aria-label="G-WORX Consulting, back to the home page">
-      <span class="brand__name">G-WORX</span>
-      <span class="brand__suffix">CONSULTING</span>
+    <a class="brand" href="index.html">
+      <img class="brand__logo" src="assets/img/gworx-logo.png"
+           srcset="assets/img/gworx-logo.png 1x, assets/img/gworx-logo@2x.png 2x"
+           width="99" height="30" alt="G-WORX">
+      <span class="brand__suffix">Sites</span>
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <ul class="primary-nav__list">
         <li><a href="index.html#services">Services</a></li>
-        <li><a href="index.html#about">Why G-WORX</a></li>
-        <li><a href="index.html#contact">Contact Us</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#faqs">FAQs</a></li>
       </ul>
     </nav>
   </div>
@@ -53,9 +55,9 @@
 
     <h2>The short version</h2>
     <p>The site is a single static page. It has no contact form, no account system, no advertising and no
-      tracking or analytics scripts. We do not set cookies and we do not sell or share personal information.
-      The only way the site collects anything from you is if you choose to book a consultation, which happens
-      on Google’s scheduling service rather than on this site.</p>
+      tracking or analytics scripts of our own, and we do not sell or share personal information. Two things
+      do involve other companies: the home page embeds a YouTube video, and booking a consultation happens on
+      Google’s scheduling service rather than on this site. Both are described below.</p>
 
     <h2>Information we collect</h2>
     <h3>Information you give us</h3>
@@ -66,15 +68,24 @@
     <p>If you email us directly, we receive whatever you choose to put in that message.</p>
 
     <h3>Information collected automatically</h3>
-    <p>This site sets no cookies and runs no analytics. Our hosting provider records standard server logs —
+    <p>We run no analytics and set no cookies of our own. Our hosting provider records standard server logs —
       IP address, time of request, requested file, browser user agent — which exist for security and
       troubleshooting and are not used to build a profile of you.</p>
+    <p>The embedded YouTube video is a separate matter. It is served in YouTube’s privacy-enhanced mode
+      (<code>youtube-nocookie.com</code>), which means YouTube does not store cookies for ad personalisation
+      when the video merely loads. It does still receive your IP address and browser details, and once you
+      press play it may store data in your browser to support playback. We receive none of that and cannot
+      see who watched.</p>
 
     <h2>Third-party services</h2>
-    <p>Two third parties are involved in serving or supporting this site:</p>
+    <p>Three third parties are involved in serving or supporting this site, all of them Google:</p>
     <ul>
       <li><strong>Google</strong> — the consultation booking page is hosted by Google. Your use of it is
         governed by the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
+        Policy<span class="visually-hidden"> (opens in a new tab)</span></a>.</li>
+      <li><strong>YouTube</strong> — the overview video on the home page is hosted by YouTube and loaded
+        from <code>youtube-nocookie.com</code>. Playback is governed by the same
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
         Policy<span class="visually-hidden"> (opens in a new tab)</span></a>.</li>
       <li><strong>Google Fonts</strong> — the Inter typeface is loaded from Google’s font servers, which means
         your browser makes a request to Google and Google receives your IP address and user agent as part of
