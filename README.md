@@ -78,11 +78,24 @@ Leave Cloudflare's **Auto Minify** and **Rocket Loader** off; Rocket Loader
 defers inline scripts and would break the `js` class that the mobile menu
 depends on.
 
+## Analytics
+
+Google Tag Manager (container `GTM-PFH7GZPV`) loads on all four pages,
+immediately after `<head>` as Google specifies. It costs roughly 178 KB and
+about 120 ms of main-thread time.
+
+**It sets cookies, so `privacy.html` names it, says what it collects and gives
+opt-out routes.** Keep those in sync: if the container is removed, or if tags
+inside it start collecting something else (remarketing, user IDs, form
+contents), the policy has to change with it. Tags added inside GTM do not
+appear in this repository, so the policy is the only record of what is running.
+
 ## Legal pages
 
 `privacy.html` and `terms.html` describe only what this site actually does today:
-a static page, no cookies, no analytics, no contact form, with booking handled by
-Google Calendar and the Inter typeface loaded from Google Fonts. **Have them
+a static page with no contact form, Google Tag Manager for measurement, booking
+handled by Google Calendar, an embedded YouTube video, and the Inter typeface
+loaded from Google Fonts. **Have them
 reviewed by counsel before launch**, and update them before adding anything that
 changes the facts — analytics, a contact form, a chat widget, retargeting pixels
 or any cookie-setting script.
