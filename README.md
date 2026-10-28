@@ -122,9 +122,11 @@ party. Keep those in sync if the embed is ever removed.
   display box and will not scale up well. **Replace it with the real logo —
   ideally an SVG — when one is available**; it is a one-line swap in each of
   the four pages.
-- The header reads "G-WORX Sites" while the page title, footer and structured
-  data say "G-WORX Consulting". That is how the Figma file has it, but confirm
-  it is the intended sub-brand rather than an inconsistency.
+- The header lockup reads "G-WORX Sites" while the page title, footer,
+  Open Graph tags and structured data all say "G-WORX Consulting". **This is
+  intentional and confirmed** — "Sites" is the lockup in the header only.
+  Leave the rest as "G-WORX Consulting"; it matches the domain and the
+  `ProfessionalService` entity in the JSON-LD.
 - Accent gold `#e8a824` fails WCAG contrast as *text* on light surfaces
   (2.1:1). Gold is kept for fills, borders and icons; accent **text** on light
   backgrounds uses `--accent-ink: #8f6200` (5.4:1) and accent **borders** use
