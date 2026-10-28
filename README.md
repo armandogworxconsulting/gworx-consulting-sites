@@ -10,7 +10,7 @@ terms.html            Terms of Service
 404.html              Not-found page (Pages serves it automatically; noindex)
 assets/css/styles.css Design tokens + all styling (mobile-first)
 assets/js/main.js     Progressive enhancement only (mobile menu, video facade)
-assets/img/           Logo lockup, portrait variants, OG image, SVG favicon
+assets/img/           Logo lockup, portrait variants, OG image, favicons
 assets/icons/         Process-step icons exported from Figma
 _headers              Cache and security headers for Cloudflare Pages
 robots.txt            Allows crawling, points at the sitemap
