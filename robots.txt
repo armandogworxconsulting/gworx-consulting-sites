@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gworxconsulting.com/sitemap.xml
