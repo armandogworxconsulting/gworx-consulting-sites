@@ -7,11 +7,12 @@ frame `Desktop V1 - Rev 4` (node `107:2`).
 index.html            The one-pager: all sections, metadata, JSON-LD
 privacy.html          Privacy Policy
 terms.html            Terms of Service
+404.html              Not-found page (Pages serves it automatically; noindex)
 assets/css/styles.css Design tokens + all styling (mobile-first)
 assets/js/main.js     Progressive enhancement only (mobile menu, video facade)
 assets/img/           Responsive JPEG + WebP variants, SVG favicon
 assets/icons/         Process-step and play icons exported from Figma
-.htaccess             Compression, caching and security headers (Apache)
+_headers              Cache and security headers for Cloudflare Pages
 robots.txt            Allows crawling, points at the sitemap
 sitemap.xml           All three URLs
 ```
@@ -36,14 +37,46 @@ They open in a new tab (`rel="noopener"`), and each carries a screen-reader-only
 note saying so. The same URL appears in the home page's JSON-LD as a
 `ReserveAction`. To change it, search and replace that URL across `index.html`.
 
-## Deployment assumptions
+## Deployment
 
-The production origin is assumed to be `https://gworxconsulting.com/`. It appears in
-the canonical tags, Open Graph and Twitter metadata, JSON-LD, `robots.txt` and
-`sitemap.xml`. Search and replace it if the real origin differs.
+**GitHub is version control only. The live site is hosted on Cloudflare Pages**,
+which builds nothing — it serves these files as they are.
 
-`.htaccess` is Apache-only. On Netlify, Vercel or Cloudflare Pages delete it —
-those platforms set compression and cache headers themselves.
+### Connecting the repo (one time)
+
+In the Cloudflare dashboard: **Workers & Pages → Create → Pages → Connect to Git**,
+authorise GitHub, pick `armandogworxconsulting/gworx-consulting-sites`, then:
+
+| Setting | Value |
+| --- | --- |
+| Production branch | `main` |
+| Framework preset | None |
+| Build command | *(leave empty)* |
+| Build output directory | `/` |
+
+Every push to `main` deploys automatically; pushes to other branches get a
+preview URL.
+
+### Serve-time configuration
+
+`_headers` sets cache and security headers. Compression (gzip/Brotli) is
+automatic on Pages and needs no configuration. There is no `.htaccess` — that
+was Apache-only and has been removed.
+
+Cache policy in `_headers` is deliberate: images and icons are cached for a
+year, but **CSS and JS revalidate hourly** because their filenames are not
+content-hashed. Caching them for a year would strand visitors on a stale
+stylesheet after a deploy. Add content hashes to those filenames before raising
+it.
+
+### Custom domain
+
+Add it under the Pages project → **Custom domains**. The site's canonical URLs,
+Open Graph tags, JSON-LD, `robots.txt` and `sitemap.xml` all assume
+`https://gworxconsulting.com/` — search and replace if the real domain differs.
+Leave Cloudflare's **Auto Minify** and **Rocket Loader** off; Rocket Loader
+defers inline scripts and would break the `js` class that the mobile menu
+depends on.
 
 ## Legal pages
 

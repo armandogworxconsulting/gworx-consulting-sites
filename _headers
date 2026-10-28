@@ -1,0 +1,32 @@
+# Cloudflare Pages response headers.
+# Serve-time config lives here, not in .htaccess — Pages is not Apache.
+# Compression (gzip/Brotli) is automatic and needs no configuration.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
+
+# Images and icons: filenames are stable, so cache them hard.
+/assets/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/icons/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# CSS and JS are NOT content-hashed, so a long max-age would strand visitors
+# on a stale stylesheet after a deploy. Revalidate hourly instead. If you ever
+# add content hashes to these filenames, raise this to a year + immutable.
+/assets/css/*
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/assets/js/*
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# HTML always revalidates so a deploy is visible immediately.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate

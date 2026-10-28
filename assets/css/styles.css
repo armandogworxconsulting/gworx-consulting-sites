@@ -798,3 +798,22 @@ picture > source { display: none; }
 .site-footer__legal-links a { text-decoration: none; }
 .site-footer__legal-links a:hover { color: var(--text-on-dark); text-decoration: underline; }
 .site-footer__legal-links [aria-current="page"] { color: var(--text-on-dark); }
+
+/* ---------- 404 ---------- */
+
+.notfound { display: grid; align-content: center; min-height: 60vh; }
+.notfound__inner { max-width: 60ch; }
+.notfound__title {
+  font-size: clamp(1.75rem, 1.3rem + 2vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+.notfound__lede { margin-top: 16px; color: var(--text-on-dark-muted); line-height: 1.65; }
+.notfound__links { margin: 24px 0 32px; display: grid; gap: 10px; }
+.notfound__links a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+  display: inline-block;
+  padding: 4px 0;
+}
