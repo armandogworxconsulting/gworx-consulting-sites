@@ -1,0 +1,13 @@
+# Repo files that are not part of the published site.
+# Same syntax as .gitignore. Without this, assets.directory = "./" would
+# publish the README and the Wrangler config at gworxconsulting.com/README.md
+# and /wrangler.jsonc.
+#
+# Do NOT add _headers here — Cloudflare reads it as config and never serves it
+# as a file. Ignoring it would silently drop the cache and security headers.
+
+.git
+.gitignore
+.claude
+README.md
+wrangler.jsonc

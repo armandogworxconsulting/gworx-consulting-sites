@@ -7,12 +7,14 @@ frame `Desktop V1 - Rev 4` (node `107:2`).
 index.html            The one-pager: all sections, metadata, JSON-LD
 privacy.html          Privacy Policy
 terms.html            Terms of Service
-404.html              Not-found page (Pages serves it automatically; noindex)
+404.html              Not-found page (served via not_found_handling; noindex)
 assets/css/styles.css Design tokens + all styling (mobile-first)
 assets/js/main.js     Progressive enhancement only (mobile menu, video facade)
 assets/img/           Logo lockup, portrait variants, OG image, favicons
 assets/icons/         Process-step icons exported from Figma
-_headers              Cache and security headers for Cloudflare Pages
+_headers              Cache and security headers (read by Cloudflare)
+wrangler.jsonc        Cloudflare Worker config (name + assets directory)
+.assetsignore         Repo files to keep out of the published site
 robots.txt            Allows crawling, points at the sitemap
 sitemap.xml           All three URLs
 ```
@@ -39,44 +41,62 @@ note saying so. The same URL appears in the home page's JSON-LD as a
 
 ## Deployment
 
-**GitHub is version control only. The live site is hosted on Cloudflare Pages**,
-which builds nothing — it serves these files as they are.
+**GitHub is version control only. The live site is served by a Cloudflare
+Worker** (service `gworxconsulting`), using Workers Static Assets — there is no
+build step, Cloudflare just serves these files.
 
-### Connecting the repo (one time)
+> Earlier revisions of this README described a Cloudflare **Pages** project.
+> That was wrong: production is a **Worker**. Pages and Workers are configured
+> in different places and the instructions do not transfer.
 
-In the Cloudflare dashboard: **Workers & Pages → Create → Pages → Connect to Git**,
-authorise GitHub, pick `armandogworxconsulting/gworx-consulting-sites`, then:
+### Config
 
-| Setting | Value |
-| --- | --- |
-| Production branch | `main` |
-| Framework preset | None |
-| Build command | *(leave empty)* |
-| Build output directory | `/` |
+`wrangler.jsonc` declares the Worker name and the assets directory.
+**`name` must match the existing Worker exactly** — with a different name,
+`wrangler deploy` creates a second Worker instead of updating the live one.
 
-Every push to `main` deploys automatically; pushes to other branches get a
-preview URL.
+Because the assets directory is the repo root, `.assetsignore` keeps repo-only
+files (README, the Wrangler config, `.claude/`) from being published at
+`/README.md` and friends. Never add `_headers` to `.assetsignore`: Cloudflare
+reads it as config and never serves it, so ignoring it would silently drop the
+cache and security headers.
 
-### Serve-time configuration
+`not_found_handling: "404-page"` serves `404.html` with a real 404 status
+instead of falling back to `index.html`, which would be a soft 404.
 
-`_headers` sets cache and security headers. Compression (gzip/Brotli) is
-automatic on Pages and needs no configuration. There is no `.htaccess` — that
-was Apache-only and has been removed.
+### Deploying on push
 
-Cache policy in `_headers` is deliberate: images and icons are cached for a
-year, but **CSS and JS revalidate hourly** because their filenames are not
-content-hashed. Caching them for a year would strand visitors on a stale
-stylesheet after a deploy. Add content hashes to those filenames before raising
-it.
+Connect the Worker to this repo once: in the Cloudflare dashboard open the
+Worker, then **Settings -> Builds -> Connect to Git**, pick
+`armandogworxconsulting/gworx-consulting-sites` and branch `main`, leave the
+build command empty, and set the deploy command to `npx wrangler deploy`.
+After that, every push to `main` deploys.
+
+### Deploying by hand
+
+```bash
+npx wrangler login     # one-time browser sign-in
+npx wrangler deploy
+```
+
+### Verifying what is live
+
+`_headers` is applied in production, so these are a quick smoke test:
+
+```bash
+curl -sI https://www.gworxconsulting.com/ | grep -i referrer-policy
+curl -sI https://www.gworxconsulting.com/assets/img/gworx-logo.png | grep -i cache-control
+```
+
+HTML should return `max-age=0, must-revalidate`; images should return
+`max-age=31536000, immutable`.
 
 ### Custom domain
 
-Add it under the Pages project → **Custom domains**. The site's canonical URLs,
-Open Graph tags, JSON-LD, `robots.txt` and `sitemap.xml` all assume
-`https://gworxconsulting.com/` — search and replace if the real domain differs.
-Leave Cloudflare's **Auto Minify** and **Rocket Loader** off; Rocket Loader
-defers inline scripts and would break the `js` class that the mobile menu
-depends on.
+The site's canonical URLs, Open Graph tags, JSON-LD, `robots.txt` and
+`sitemap.xml` all assume `https://gworxconsulting.com/` — search and replace if
+the real domain differs. Leave Cloudflare's **Rocket Loader** off; it defers
+inline scripts and would break the `js` class the mobile menu depends on.
 
 ## Analytics
 

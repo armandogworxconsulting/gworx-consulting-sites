@@ -1,0 +1,20 @@
+{
+  // The Worker this repo deploys to. This MUST match the existing Worker's
+  // name exactly — if it does not, `wrangler deploy` creates a SECOND Worker
+  // rather than updating the live one. Taken from the dashboard URL
+  // .../workers/services/view/gworxconsulting/production
+  "name": "gworxconsulting",
+
+  "compatibility_date": "2026-10-28",
+
+  // Assets-only Worker: there is no server-side code, Cloudflare just serves
+  // these files. No build step, so the assets directory is the repo root and
+  // .assetsignore keeps repo-only files out of the published site.
+  "assets": {
+    "directory": "./",
+
+    // Serve 404.html with a real 404 status on an unknown path, rather than
+    // falling back to index.html (which would be a soft 404).
+    "not_found_handling": "404-page"
+  }
+}
