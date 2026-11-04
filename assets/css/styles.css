@@ -341,7 +341,10 @@ a { color: inherit; }
 .hero__inner { display: grid; justify-items: center; text-align: center; }
 
 .hero__title {
-  max-width: 20ch;
+  /* 22ch, not 20ch: the headline needs 653px to set on one line at desktop
+     and 20ch caps it at 647px, wrapping it for the sake of six pixels.
+     Narrower screens still wrap, since the shell is the limit there. */
+  max-width: 22ch;
   font-size: clamp(2rem, 1.25rem + 3.4vw, 3rem);
   font-weight: 700;
   line-height: 1.15;
