@@ -386,12 +386,17 @@ a { color: inherit; }
 .pricing__scroller { overflow-x: auto; }
 .pricing__scroller:focus-visible { outline-offset: -3px; }
 
+/* Only the no-JS fallback ever shows the scrollable table on a phone, so
+   the scroll hint belongs to that fallback alone. */
 .pricing__hint {
+  display: none;
   padding: 16px var(--gutter) 0;
   font-size: 13px;
   color: var(--text-2);
 }
-@media (min-width: 620px) { .pricing__hint { display: none; } }
+@media (max-width: 767px) {
+  .pricing:not(.has-cards) .pricing__hint { display: block; }
+}
 
 .pricing__table {
   width: 100%;
@@ -507,6 +512,83 @@ a { color: inherit; }
   font-size: 12px;
   line-height: 16px;
   color: var(--text-2);
+}
+
+
+/* ---------- Mobile package cards (below 768px) ---------- */
+
+/* Built by main.js from the table; see the comment there. Hidden by default
+   so they never appear alongside the table. */
+.pkg-cards { display: none; }
+
+@media (max-width: 767px) {
+  .pricing.has-cards > .pricing__scroller { display: none; }
+  .pricing.has-cards > .pkg-cards {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+  }
+}
+
+.pkg-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.pkg-card--featured { border: 2px solid var(--accent); }
+
+.pkg-card__head { padding: 24px 20px; }
+.pkg-card--featured .pkg-card__head { background: var(--navy-800); }
+
+.pkg-card__name { font-size: 20px; font-weight: 700; line-height: 26px; }
+.pkg-card__scope { margin-top: 6px; font-size: 14px; line-height: 20px; color: var(--text-2); }
+.pkg-card__price { margin-top: 6px; font-size: 22px; font-weight: 700; line-height: 30px; }
+.pkg-card__head .btn { margin-top: 20px; }
+
+.pkg-card--featured .pkg-card__name { color: var(--text-on-dark); }
+.pkg-card--featured .pkg-card__scope { color: var(--navy-300); }
+.pkg-card--featured .pkg-card__price { color: var(--accent); }
+
+/* The accordion sits on white in both cards, including under the dark head. */
+.pkg-card__acc { background: var(--bg); }
+
+.pkg-card__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 56px;
+  padding: 16px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+.pkg-card__toggle::-webkit-details-marker { display: none; }
+.pkg-card__toggle::after {
+  content: "";
+  flex: 0 0 auto;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  background-image:
+    linear-gradient(var(--navy-900), var(--navy-900)),
+    linear-gradient(var(--navy-900), var(--navy-900));
+  background-repeat: no-repeat;
+  background-position: center, center;
+  background-size: 12px 2px, 2px 12px; /* plus when collapsed */
+}
+.pkg-card__acc[open] > .pkg-card__toggle::after {
+  background-size: 12px 2px, 0 0;      /* minus when expanded */
+}
+
+.pkg-card__list { padding: 0 20px 12px; }
+.pkg-card__list li {
+  padding: 14px 2px;
+  font-size: 15px;
+  line-height: 22px;
+  border-top: 1px solid var(--border);
 }
 
 /* ---------- Hourly rates ---------- */

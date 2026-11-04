@@ -122,6 +122,23 @@ or any cookie-setting script.
 
 Both carry a "Last updated 28 October 2026" date; bump it whenever you edit them.
 
+## The pricing table on small screens
+
+Below 768px the comparison table is replaced by one card per package, with
+that package's included services behind an accordion. Only the services a
+package *includes* are listed — there are no "Not included" rows in the
+mobile view, which is what the design calls for.
+
+**Those cards are generated from the table by `assets/js/main.js`, not
+written into the HTML.** The pricing content therefore exists in exactly one
+place and the two views cannot drift apart when a row or price changes. Edit
+the table; the cards follow.
+
+The enhancement sets `.has-cards` on `.pricing`, and the CSS only hides the
+table once that class is present. So if the script never runs, mobile keeps
+the scrollable table and its scroll hint, and the section still works — the
+hint is styled to appear *only* in that fallback.
+
 ## Hero video
 
 The hero embeds YouTube video `DfGLLdW6ksg` via `youtube-nocookie.com`.
