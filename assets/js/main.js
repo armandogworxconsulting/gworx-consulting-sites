@@ -128,3 +128,52 @@
   pricing.insertBefore(cards, pricing.querySelector(".pricing__scroller"));
   pricing.classList.add("has-cards");
 })();
+
+/* Back-to-top control.
+
+   Revealed once the Service Packages section has scrolled fully above the
+   viewport, so it appears past the hero and the packages, as specified. */
+(function () {
+  "use strict";
+
+  var btn = document.getElementById("backToTop");
+  var marker = document.getElementById("services");
+  if (!btn || !marker) { return; }
+
+  /* Only becomes a real control once we know we can drive it. */
+  btn.hidden = false;
+
+  /* A passive scroll listener throttled to one read per animation frame.
+     An IntersectionObserver would also work, but it only fires on crossings
+     and so needs a separate pass to get the state right on load; this reads
+     the same truth every time and is evaluated immediately below. */
+  var queued = false;
+
+  function update() {
+    queued = false;
+    btn.classList.toggle("is-visible", marker.getBoundingClientRect().bottom < 0);
+  }
+
+  function onScroll() {
+    if (queued) { return; }
+    queued = true;
+    window.requestAnimationFrame(update);
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  update();
+
+  btn.addEventListener("click", function () {
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+
+    /* Send keyboard focus back to the top too, otherwise the next Tab would
+       resume from the footer and the page would jump straight back down. */
+    var top = document.getElementById("top");
+    if (top) {
+      top.setAttribute("tabindex", "-1");
+      top.focus({ preventScroll: true });
+    }
+  });
+})();

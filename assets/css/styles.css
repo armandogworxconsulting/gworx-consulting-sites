@@ -887,3 +887,46 @@ picture > source { display: none; }
   display: inline-block;
   padding: 4px 0;
 }
+
+/* ---------- Back to top ---------- */
+
+.back-to-top {
+  position: fixed;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  background: var(--accent);
+  color: var(--navy-900);
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+/* display:grid above would otherwise beat the UA rule for [hidden]. */
+.back-to-top[hidden] { display: none; }
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.back-to-top:hover { background: #d1930f; }
+
+/* The global focus ring is the same gold as this button, so it would be
+   invisible here — use the dark ink instead. */
+.back-to-top:focus-visible {
+  outline: 3px solid var(--navy-900);
+  outline-offset: 3px;
+}
+
+.back-to-top svg { display: block; }
