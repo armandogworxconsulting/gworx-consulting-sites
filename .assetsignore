@@ -11,3 +11,10 @@
 .claude
 README.md
 wrangler.jsonc
+
+# Editable sources. Only the content-hashed copies that build.mjs produces
+# are published, so these fixed URLs must not exist on the live site --
+# otherwise a stale cached page could keep loading them forever.
+assets/css/styles.css
+assets/js/main.js
+build.mjs

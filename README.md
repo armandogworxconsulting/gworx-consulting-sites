@@ -13,15 +13,40 @@ assets/js/main.js     Progressive enhancement only (mobile menu, video facade)
 assets/img/           Logo lockup, portrait variants, OG image, favicons
 assets/icons/         Process-step icons exported from Figma
 _headers              Cache and security headers (read by Cloudflare)
+build.mjs             Content-hashes the CSS and JS; run after editing them
 wrangler.jsonc        Cloudflare Worker config (name + assets directory)
 .assetsignore         Repo files to keep out of the published site
 robots.txt            Allows crawling, points at the sitemap
 sitemap.xml           All three URLs
 ```
 
+## Building
+
+CSS and JS are content-hashed. **After editing `assets/css/styles.css` or
+`assets/js/main.js`, run:**
+
+```bash
+node build.mjs
+```
+
+That writes `styles.<hash>.css` and `main.<hash>.js`, repoints all four pages
+at them, and deletes the previous hashed copies. It is idempotent, and it
+fails rather than leave a page pointing at an unhashed file.
+
+**Why it exists:** the fixed URLs `styles.css` and `main.js` could sit in a
+visitor's cache for up to an hour, so a CSS or JS change was invisible to
+anyone who had been on the site recently, even though the HTML had already
+updated. A hashed filename changes whenever the file changes, so nobody can
+have the new URL cached — edits take effect on the next load, and the files
+can safely be cached for a year.
+
+**If you edit CSS or JS and forget to run it**, your change will not reach the
+site: the pages keep pointing at the old hash, and `.assetsignore` keeps the
+unhashed source from being published. Run it before committing.
+
 ## Running it
 
-Any static server works — there is no build step:
+Any static server works:
 
 ```bash
 python3 -m http.server 4317
